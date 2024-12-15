@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+        }
+        input, select, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .response {
+            margin-top: 20px;
+            padding: 10px;
+            background: #e9ecef;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>API Test Panel</h1>
+        <div class="form-group">
+            <label for="endpoint">API Endpoint</label>
+            <input type="text" id="endpoint" placeholder="http://localhost:5000/process_receipt" />
+        </div>
+        <div class="form-group">
+            <label for="apiKey">API Key</label>
+            <input type="text" id="apiKey" placeholder="Enter your API Key" />
+        </div>
+        <div class="form-group">
+            <label for="file">Upload File</label>
+            <input type="file" id="file" />
+        </div>
+        <button id="sendRequest">Send Request</button>
+
+        <div class="response">
+            <h3>Response:</h3>
+            <pre id="responseOutput">No response yet.</pre>
+            <pre id="statusOutput" class="error"></pre>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('sendRequest').addEventListener('click', async () => {
+            const endpoint = document.getElementById('endpoint').value;
+            const apiKey = document.getElementById('apiKey').value;
+            const fileInput = document.getElementById('file');
+            const file = fileInput.files[0];
+
+            if (!endpoint || !apiKey || !file) {
+                alert('Please provide the API Endpoint, API Key, and select a file.');
+                return;
+            }
+
+            try {
+                const formData = new FormData();
+                formData.append('api_key', apiKey);
+                formData.append('file', file);
+
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const statusOutput = document.getElementById('statusOutput');
+                statusOutput.textContent = `HTTP Status: ${response.status} ${response.statusText}`;
+                
+                let result;
+                try {
+                    result = await response.json();
+                } catch (jsonError) {
+                    result = await response.text();
+                }
+
+                document.getElementById('responseOutput').textContent = JSON.stringify(result, null, 4);
+            } catch (error) {
+                document.getElementById('responseOutput').textContent = `Error: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+    "total": 666,
+    "store": "Intermarché Mira",
+    "items": [
+        {
+            "product": "Gasoline Simple 95",
+            "quantity": 1,
+            "price": 1834,
+            "type": "Grocery"
+        },
+        {
+            "product": "Gasoline Simple 95",
+            "quantity": 1,
+            "price": 235,
+            "type": "Grocery"
+        }
+    ]
+}
