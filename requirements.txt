@@ -1,0 +1,6 @@
+Flask==3.0.0
+Flask-Cors==4.0.0
+mysql-connector-python==8.3.0
+pytesseract==0.3.10
+opencv-python==4.9.0.80
+openai==1.30.1
