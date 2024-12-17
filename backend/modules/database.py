@@ -38,3 +38,39 @@ def insert_receipt(data):
     connection.close()
 
     return receipt_id
+
+def fetch_all_receipts():
+    """
+    Fetches all receipts from the database with their main details.
+    """
+    connection = get_db_connection()
+    cursor = connection.cursor(dictionary=True)
+
+    query = "SELECT id, total, source AS store FROM receipts"
+    cursor.execute(query)
+    results = cursor.fetchall()
+
+    cursor.close()
+    connection.close()
+
+    return results
+
+def fetch_receipt_details(receipt_id):
+    """
+    Fetches all items associated with a specific receipt.
+    """
+    connection = get_db_connection()
+    cursor = connection.cursor(dictionary=True)
+
+    query = """
+    SELECT product, quantity, price, category
+    FROM receipt_items
+    WHERE receipt_id = %s
+    """
+    cursor.execute(query, (receipt_id,))
+    results = cursor.fetchall()
+
+    cursor.close()
+    connection.close()
+
+    return {"receipt_id": receipt_id, "items": results}
