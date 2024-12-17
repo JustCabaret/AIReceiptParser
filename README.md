@@ -1,6 +1,6 @@
 # Receipt Parser
 
-This project provides a receipt parsing application implemented using Python and Flask. It leverages OCR (Optical Character Recognition) technology and OpenAI GPT-4 to extract, process, and categorize information from receipt images. The application includes a user-friendly web interface to upload and view receipts.
+This project provides an intelligent solution for automating the extraction and organization of data from receipt images. Designed for businesses and individuals, it simplifies the often tedious process of manual data entry, allowing users to focus on insights and decision-making. By utilizing cutting-edge OCR (Optical Character Recognition) and AI-powered processing, this application transforms raw receipt images into structured, actionable data.
 
 Inspired by @IAmTomShaw's [Receipt Vision](https://github.com/IAmTomShaw/receipt-vision).
 
