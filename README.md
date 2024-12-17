@@ -1,6 +1,6 @@
-# Receipt Parser
+# AI Receipt Parser
 
-This project provides an intelligent solution for automating the extraction and organization of data from receipt images. Designed for businesses and individuals, it simplifies the often tedious process of manual data entry, allowing users to focus on insights and decision-making. By utilizing cutting-edge OCR (Optical Character Recognition) and AI-powered processing, this application transforms raw receipt images into structured, actionable data.
+This project provides an intelligent solution for automating the extraction and organization of data from receipt images. Designed for businesses and individuals, it simplifies the often tedious process of manual data entry, allowing users to focus on insights and decision-making. This application uses advanced OCR (Optical Character Recognition) technology and AI-driven processing to convert receipt images into well-organized, actionable data.
 
 Inspired by @IAmTomShaw's [Receipt Vision](https://github.com/IAmTomShaw/receipt-vision).
 
