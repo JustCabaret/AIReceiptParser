@@ -75,6 +75,15 @@ function changePage(page) {
 
 async function processFile(e) {
     e.preventDefault();
+    const btn = document.getElementById("uploadBtn");
+    const spinner = document.getElementById("uploadSpinner");
+    const btnText = document.getElementById("uploadBtnText");
+
+    // Loading State
+    btn.disabled = true;
+    spinner.classList.remove("d-none");
+    btnText.textContent = "Processing AI...";
+
     const formData = new FormData();
     formData.append("file", document.getElementById("fileInput").files[0]);
     formData.append("api_key", getCookie("api_key"));
@@ -92,11 +101,21 @@ async function processFile(e) {
         loadReceipts();
     } catch (error) {
         alert("Error: " + error.message);
+    } finally {
+        // Reset State
+        btn.disabled = false;
+        spinner.classList.add("d-none");
+        btnText.textContent = "Upload";
+        document.getElementById("uploadForm").reset();
     }
 }
 
 async function showReceiptDetails(receiptId) {
     const detailsTableBody = document.getElementById("detailsTableBody");
+    const exportBtn = document.getElementById("exportCsvBtn");
+    
+    // Reset export state
+    exportBtn.style.display = "none";
     showModal("detailsModal");
 
     try {
@@ -108,16 +127,35 @@ async function showReceiptDetails(receiptId) {
             .map(
                 (item) => `
             <tr>
-                <td>${item.product}</td>
-                <td>${item.quantity}</td>
-                <td>${(item.price / 100).toFixed(2)}</td>
-                <td>${item.category}</td>
+                <td class="fw-medium">${item.product}</td>
+                <td class="text-center">${item.quantity}</td>
+                <td class="text-end fw-semibold">${(item.price / 100).toFixed(2)}</td>
+                <td><span class="category-badge">${item.category}</span></td>
             </tr>`
             )
             .join("");
+
+        // Show Export button and attach event listener
+        exportBtn.style.display = "block";
+        exportBtn.onclick = () => downloadCSV(data.items);
     } catch (error) {
         detailsTableBody.innerHTML = `<tr><td colspan="4" class="text-danger">${error.message}</td></tr>`;
     }
+}
+
+function downloadCSV(items) {
+    const headers = "Product,Quantity,Price,Category\n";
+    const rows = items.map(item => `"${item.product}",${item.quantity},${(item.price / 100).toFixed(2)},"${item.category}"`).join("\n");
+    const csvContent = headers + rows;
+    
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", "receipt_export.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }
 
 function showModal(id) {

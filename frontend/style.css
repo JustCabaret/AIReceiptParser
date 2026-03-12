@@ -1,14 +1,268 @@
-/* Global Styles */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+/* Minimalist Global Styles */
+:root {
+    --bg-color: #fafafa;
+    --surface-color: #ffffff;
+    --text-main: #111827;
+    --text-muted: #6b7280;
+    --border-color: #e5e7eb;
+    --accent-color: #000000;
+    --hover-bg: #f3f4f6;
+}
+
 body {
-    background-color: #f8f9fa;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    min-height: 100vh;
+    letter-spacing: -0.01em;
 }
 
-/* Navbar */
+/* Clean Navbar */
 .navbar {
-    padding: 0.75rem 1rem;
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 0;
+    z-index: 1030;
 }
 
-.table-hover tbody tr:hover {
-    background-color: #f1f1f1;
+.navbar-brand {
+    padding: 0;
+    margin: 0;
+}
+
+.brand-text {
+    font-weight: 700;
+    font-size: 1.4rem;
+    letter-spacing: -0.04em;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+}
+
+.outline-badge {
+    font-size: 0.65rem;
+    padding: 0.35em 0.65em;
+    background-color: transparent !important;
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    letter-spacing: 0.05em;
+}
+
+/* Minimalist Buttons */
+.btn-custom-solid {
+    background-color: var(--accent-color);
+    color: #ffffff;
+    border: 1px solid var(--accent-color);
+    border-radius: 6px;
+    padding: 0.5rem 1.25rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.btn-custom-solid:hover {
+    background-color: #333333;
+    border-color: #333333;
+    color: #ffffff;
+}
+
+.btn-custom-outline {
+    background-color: transparent;
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 0.5rem 1.25rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.btn-custom-outline:hover {
+    background-color: var(--hover-bg);
+    color: var(--text-main);
+}
+
+/* Clean Table Overhaul Base */
+.table-container {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2.5rem;
+    margin-top: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+h4 {
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: var(--text-main);
+    margin-bottom: 1.5rem !important;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 0;
+    border-collapse: separate;
+    border-spacing: 0 0.5rem;
+    color: var(--text-main);
+}
+
+.table > :not(caption) > * > * {
+    background-color: transparent;
+    color: var(--text-main);
+    border: none;
+    padding: 1.25rem 1rem;
+    vertical-align: middle;
+}
+
+.table thead th {
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    padding: 0 1rem 0.5rem 1rem;
+    border-bottom: none;
+}
+
+.table tbody tr {
+    background-color: var(--bg-color);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.table-hover > tbody > tr:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.table-hover > tbody > tr:hover > * {
+    background-color: var(--hover-bg);
+    color: var(--text-main);
     cursor: pointer;
+}
+
+.table tbody td:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    font-weight: 500;
+}
+
+.table tbody td:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+/* Modals Refined */
+.modal-content {
+    background-color: var(--surface-color);
+    border: none;
+    border-radius: 20px;
+    color: var(--text-main);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--border-color);
+    padding: 1.5rem;
+}
+
+.modal-title {
+    font-weight: 600;
+    font-size: 1.125rem;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.modal-footer {
+    border-top: 1px solid var(--border-color);
+    padding: 1.5rem;
+}
+
+.form-control {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    border-radius: 8px;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.875rem;
+}
+
+.form-control:focus {
+    background-color: var(--surface-color);
+    border-color: var(--accent-color);
+    color: var(--text-main);
+    box-shadow: 0 0 0 1px var(--accent-color);
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
+}
+
+/* Pagination */
+.pagination {
+    margin-top: 2rem;
+}
+.page-link {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    border-radius: 6px;
+    margin: 0 0.25rem;
+}
+.page-link:hover {
+    background-color: var(--hover-bg);
+    color: var(--text-main);
+    border-color: var(--border-color);
+}
+.page-item.active .page-link {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: white;
+}
+
+/* Category Badge */
+.category-badge {
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 0.35rem 0.85rem;
+    border-radius: 9999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: inline-block;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .table-container {
+        padding: 1.25rem;
+        margin-top: 1rem;
+        border-radius: 12px;
+    }
+
+    .table > :not(caption) > * > * {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .modal-body, .modal-footer, .modal-header {
+        padding: 1.25rem;
+    }
+
+    .brand-text {
+        font-size: 1.1rem;
+    }
+    
+    .navbar {
+        padding: 0.5rem 0;
+    }
 }

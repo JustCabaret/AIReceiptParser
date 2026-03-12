@@ -2,6 +2,19 @@ import json
 from openai import OpenAI
 
 def process_text_with_chatgpt(text_content, api_key):
+    # Simulation Check for users without OpenAI Tokens
+    if api_key.lower().strip() == "test":
+        print("MOCK MODE ENABLED: Bypassing OpenAI API call.")
+        return {
+            "total": 4550,
+            "store": "Mock Supermarket",
+            "items": [
+                {"product": "Simulated Milk", "quantity": 1, "price": 125, "type": "Groceries"},
+                {"product": "Simulated Bread", "quantity": 2, "price": 250, "type": "Groceries"},
+                {"product": "Test Keyboard", "quantity": 1, "price": 3925, "type": "Electronics"}
+            ]
+        }
+
     client = OpenAI(api_key=api_key)
 
     # Refined prompt to preserve product language
