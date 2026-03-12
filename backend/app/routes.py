@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify
+from werkzeug.utils import secure_filename
 import os
 from app.controllers import process_receipt, get_all_receipts, get_receipt_details
 
@@ -27,20 +28,24 @@ def process_receipt_route():
         if file.filename == '':
             return jsonify({"error": "No file selected."}), 400
 
-        # Save the file temporarily
-        upload_dir = "uploads"
-        os.makedirs(upload_dir, exist_ok=True)
-        file_path = os.path.join(upload_dir, file.filename)
-        file.save(file_path)
+        file_path = None
+        try:
+            # Save the file temporarily securely
+            upload_dir = "uploads"
+            os.makedirs(upload_dir, exist_ok=True)
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(upload_dir, filename)
+            file.save(file_path)
 
-        # Process the file
-        result = process_receipt(file_path, api_key)
+            # Process the file
+            result = process_receipt(file_path, api_key)
 
-        # Clean up the temporary file
-        os.remove(file_path)
-
-        # Return the result as JSON
-        return jsonify(result), 200
+            # Return the result as JSON
+            return jsonify(result), 200
+        finally:
+            # Clean up the temporary file, even if an exception occurs
+            if file_path and os.path.exists(file_path):
+                os.remove(file_path)
 
     except Exception as e:
         # Return errors in JSON format
