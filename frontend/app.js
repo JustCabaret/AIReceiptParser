@@ -29,6 +29,7 @@ function saveApiKey() {
     }
 }
 
+
 async function loadReceipts() {
     try {
         const response = await fetch(`${API_BASE_URL}/receipts`);
@@ -80,12 +81,17 @@ async function processFile(e) {
 
     try {
         const response = await fetch(`${API_BASE_URL}/process_receipt`, { method: "POST", body: formData });
-        if (!response.ok) throw new Error("Upload failed.");
+        
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Upload failed due to a server error.");
+        }
+        
         alert("Receipt uploaded successfully!");
         bootstrap.Modal.getInstance(document.getElementById("receiptModal")).hide();
         loadReceipts();
     } catch (error) {
-        alert(error.message);
+        alert("Error: " + error.message);
     }
 }
 

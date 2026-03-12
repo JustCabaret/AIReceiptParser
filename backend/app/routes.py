@@ -16,13 +16,16 @@ def process_receipt_route():
             return jsonify({"error": "No file part in the request"}), 400
 
         file = request.files['file']
-        api_key = request.form.get('api_key')
+        
+        # Determine API key: first check the form submission from the frontend.
+        # If not provided, fallback to the .env operating system variable.
+        api_key = request.form.get('api_key') or os.getenv('OPENAI_API_KEY')
 
         # Validate input
-        if not api_key:
-            return jsonify({"error": "Missing API key"}), 400
+        if not api_key or api_key == 'undefined':
+            return jsonify({"error": "Missing OpenAI API Key. Please click 'Change API Key' to set it up."}), 400
         if file.filename == '':
-            return jsonify({"error": "No file selected"}), 400
+            return jsonify({"error": "No file selected."}), 400
 
         # Save the file temporarily
         upload_dir = "uploads"

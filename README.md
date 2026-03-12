@@ -22,7 +22,7 @@ Inspired by @IAmTomShaw's [Receipt Vision](https://github.com/IAmTomShaw/receipt
 
 - **Backend**: Flask (Python)
 - **Frontend**: HTML, CSS, Bootstrap, JavaScript
-- **Database**: MySQL
+- **Database**: SQLite
 - **AI Integration**: OpenAI GPT-4 API
 - **OCR**: Tesseract
 
@@ -31,7 +31,6 @@ Inspired by @IAmTomShaw's [Receipt Vision](https://github.com/IAmTomShaw/receipt
 ### Prerequisites
 
 - Python 3.10 or higher
-- MySQL Server (8.0+)
 - OpenAI API Key
 
 ### Installation
@@ -53,42 +52,18 @@ Inspired by @IAmTomShaw's [Receipt Vision](https://github.com/IAmTomShaw/receipt
    pip install -r requirements.txt
    ```
 
-4. **Create the MySQL database:**
-   - Run the following SQL script on your MySQL server:
-     ```sql
-     CREATE DATABASE receiptparserdb;
-     USE receiptparserdb;
-     
-     CREATE TABLE receipts (
-         id INT AUTO_INCREMENT PRIMARY KEY,
-         total INT NOT NULL,
-         source VARCHAR(255) NOT NULL,
-         parsed_at DATETIME DEFAULT CURRENT_TIMESTAMP
-     );
-
-     CREATE TABLE receipt_items (
-         id INT AUTO_INCREMENT PRIMARY KEY,
-         receipt_id INT NOT NULL,
-         product VARCHAR(255) NOT NULL,
-         quantity INT NOT NULL,
-         price INT NOT NULL,
-         category VARCHAR(50) DEFAULT NULL,
-         FOREIGN KEY (receipt_id) REFERENCES receipts(id)
-     );
+4. **Set up Environment Variables:**
+   - Create a copy of the `.env.example` file and rename it to `.env`:
+     ```sh
+     cp .env.example .env
+     ```
+   - Open the `.env` file and add your OpenAI API Key:
+     ```env
+     OPENAI_API_KEY=your_openai_api_key_here
      ```
 
-5. **Update the database credentials:**
-   Edit `database.py` with your MySQL connection details:
-   ```python
-   mysql.connector.connect(
-       host="127.0.0.1",
-       user="your_username",
-       password="your_password",
-       database="receiptparserdb"
-   )
-   ```
-
-6. **Run the application:**
+5. **Run the application:**
+   - The SQLite database and tables will be created automatically on the first run.
    ```sh
    python app.py
    ```
