@@ -25,6 +25,7 @@ def process_text_with_chatgpt(text_content, api_key):
     # OpenAI API call
     response = client.chat.completions.create(
         model="gpt-4o-mini",
+        response_format={ "type": "json_object" },
         messages=[
             {
                 "role": "user",
@@ -33,13 +34,13 @@ def process_text_with_chatgpt(text_content, api_key):
         ]
     )
 
-    # Extract JSON response
+    # Extract JSON response (Now guaranteed to be a string of a JSON object)
     content = response.choices[0].message.content
 
     try:
-        # Validate if content is a valid JSON
-        json_data = json.loads(content[content.find("{"):content.rfind("}") + 1])
+        # Validate and parse JSON natively
+        json_data = json.loads(content)
     except json.JSONDecodeError:
-        raise ValueError("A resposta do GPT não contém um JSON válido.")
+        raise ValueError("A resposta do GPT falhou ao ser lida como JSON válido.")
 
     return json_data
